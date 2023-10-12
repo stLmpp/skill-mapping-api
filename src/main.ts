@@ -34,10 +34,6 @@ async function bootstrap() {
   SwaggerModule.setup('help', app, document, {
     swaggerOptions: {
       displayRequestDuration: true,
-      requestInterceptor: (request: unknown) =>
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-expect-error
-        __request__interceptor(request),
     },
   });
 

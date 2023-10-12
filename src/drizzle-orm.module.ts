@@ -11,12 +11,13 @@ import { getClazz } from './util/get-clazz.js';
 
 export class Drizzle extends getClazz<BetterSQLite3Database>() {}
 
-const path = join(homedir(), 'skill-mapping');
+export const DATABASE_PATH = join(homedir(), 'skill-mapping');
 
-if (!existsSync(path)) {
-  mkdirSync(path);
+if (!existsSync(DATABASE_PATH)) {
+  mkdirSync(DATABASE_PATH);
 }
-const database = new Database(join(path, 'data.db'));
+
+const database = new Database(join(DATABASE_PATH, 'data.db'));
 const drizzleDatabase = drizzle(database);
 migrate(drizzleDatabase, { migrationsFolder: './drizzle' });
 

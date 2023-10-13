@@ -14,4 +14,13 @@ export class SkillLevelRepository {
       .from(SkillLevelEntity)
       .where(inArray(SkillLevelEntity.id, skillLevelIds));
   }
+
+  async find() {
+    return this.drizzle
+      .select({
+        id: SkillLevelEntity.id,
+        name: SkillLevelEntity.name,
+      })
+      .from(SkillLevelEntity);
+  }
 }

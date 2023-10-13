@@ -14,4 +14,8 @@ export class SkillRepository {
       .from(SkillEntity)
       .where(inArray(SkillEntity.id, skillIds));
   }
+
+  async find() {
+    return this.drizzle.select().from(SkillEntity);
+  }
 }

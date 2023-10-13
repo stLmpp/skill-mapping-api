@@ -4,6 +4,7 @@ import { RouterModule } from '@nestjs/core';
 
 import { DrizzleOrmModule } from './drizzle-orm.module.js';
 import { PersonModule } from './person/person.module.js';
+import { SkillLevelModule } from './skill-level/skill-level.module.js';
 
 @Module({
   imports: [
@@ -14,8 +15,13 @@ import { PersonModule } from './person/person.module.js';
         module: PersonModule,
         path: 'person',
       },
+      {
+        module: SkillLevelModule,
+        path: 'skill-level',
+      },
     ]),
     PersonModule,
+    SkillLevelModule,
   ],
   controllers: [],
   providers: [],

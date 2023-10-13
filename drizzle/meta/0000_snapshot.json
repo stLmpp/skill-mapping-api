@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "26b9371e-9e3c-47b0-b8db-3ef49667544e",
+  "id": "add8ca6b-4547-4465-9d04-bc2d14e331c3",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "person": {
@@ -37,8 +37,8 @@
         }
       },
       "indexes": {
-        "person_pid_unique": {
-          "name": "person_pid_unique",
+        "person_pid_unique_index": {
+          "name": "person_pid_unique_index",
           "columns": [
             "pid"
           ],
@@ -73,8 +73,8 @@
           "notNull": false,
           "autoincrement": false
         },
-        "skill_level_int": {
-          "name": "skill_level_int",
+        "skill_level_id": {
+          "name": "skill_level_id",
           "type": "integer",
           "primaryKey": false,
           "notNull": false,
@@ -89,24 +89,24 @@
         }
       },
       "indexes": {
-        "person_id_index": {
-          "name": "person_id_index",
+        "person_skill_person_id_index": {
+          "name": "person_skill_person_id_index",
           "columns": [
             "person_id"
           ],
           "isUnique": false
         },
-        "skill_id_index": {
-          "name": "skill_id_index",
+        "person_skill_skill_id_index": {
+          "name": "person_skill_skill_id_index",
           "columns": [
             "skill_id"
           ],
           "isUnique": false
         },
-        "skill_level_id_index": {
-          "name": "skill_level_id_index",
+        "person_skill_skill_level_id_index": {
+          "name": "person_skill_skill_level_id_index",
           "columns": [
-            "skill_level_int"
+            "skill_level_id"
           ],
           "isUnique": false
         }
@@ -138,12 +138,91 @@
           "onDelete": "no action",
           "onUpdate": "no action"
         },
-        "person_skill_skill_level_int_skill_level_id_fk": {
-          "name": "person_skill_skill_level_int_skill_level_id_fk",
+        "person_skill_skill_level_id_skill_level_id_fk": {
+          "name": "person_skill_skill_level_id_skill_level_id_fk",
           "tableFrom": "person_skill",
           "tableTo": "skill_level",
           "columnsFrom": [
-            "skill_level_int"
+            "skill_level_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "person_skill_interest": {
+      "name": "person_skill_interest",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "person_id": {
+          "name": "person_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "skill_id": {
+          "name": "skill_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "person_skill_interest_person_id_index": {
+          "name": "person_skill_interest_person_id_index",
+          "columns": [
+            "person_id"
+          ],
+          "isUnique": false
+        },
+        "person_skill_interest_skill_id_index": {
+          "name": "person_skill_interest_skill_id_index",
+          "columns": [
+            "skill_id"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "person_skill_interest_person_id_person_id_fk": {
+          "name": "person_skill_interest_person_id_person_id_fk",
+          "tableFrom": "person_skill_interest",
+          "tableTo": "person",
+          "columnsFrom": [
+            "person_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "person_skill_interest_skill_id_skill_id_fk": {
+          "name": "person_skill_interest_skill_id_skill_id_fk",
+          "tableFrom": "person_skill_interest",
+          "tableTo": "skill",
+          "columnsFrom": [
+            "skill_id"
           ],
           "columnsTo": [
             "id"
@@ -199,7 +278,7 @@
           "name": "name",
           "type": "text(255)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "created_at": {

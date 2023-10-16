@@ -13,9 +13,20 @@ export const SkillLevelNotFound = exception({
   errorCode: 'PERSON-0002',
 });
 
-export const SkillsMustBeUnique = exception({
-  message: 'Skills must be unique',
+export const ChapterNotFound = exception({
+  message: 'Chapter not found',
   status: HttpStatus.BAD_REQUEST,
   errorCode: 'PERSON-0003',
-  error: 'body.skills must not have duplicated skillIds',
+});
+
+export const CustomerNotFound = exception({
+  message: 'Customer not found',
+  status: HttpStatus.BAD_REQUEST,
+  errorCode: 'PERSON-0004',
+});
+
+export const CareerLevelNotFound = exception({
+  message: 'Career level not found',
+  status: HttpStatus.BAD_REQUEST,
+  errorCode: 'PERSON-0005',
 });

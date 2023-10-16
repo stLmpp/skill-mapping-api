@@ -1,9 +1,99 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "add8ca6b-4547-4465-9d04-bc2d14e331c3",
+  "id": "7b2ebc61-6c2b-4ffd-9174-270b1b55c813",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
+    "career_level": {
+      "name": "career_level",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text(10)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "chapter": {
+      "name": "chapter",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "name": {
+          "name": "name",
+          "type": "text(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "customer": {
+      "name": "customer",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "person": {
       "name": "person",
       "columns": {
@@ -14,11 +104,32 @@
           "notNull": true,
           "autoincrement": true
         },
-        "pid": {
-          "name": "pid",
-          "type": "text(30)",
+        "eid": {
+          "name": "eid",
+          "type": "text(255)",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "career_level_id": {
+          "name": "career_level_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "chapter_id": {
+          "name": "chapter_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "last_customer_id": {
+          "name": "last_customer_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
           "autoincrement": false
         },
         "other_information": {
@@ -37,15 +148,76 @@
         }
       },
       "indexes": {
-        "person_pid_unique_index": {
-          "name": "person_pid_unique_index",
+        "person_eid_unique_index": {
+          "name": "person_eid_unique_index",
           "columns": [
-            "pid"
+            "eid"
           ],
           "isUnique": true
+        },
+        "person_career_level_id_index": {
+          "name": "person_career_level_id_index",
+          "columns": [
+            "career_level_id"
+          ],
+          "isUnique": false
+        },
+        "person_chapter_id_index": {
+          "name": "person_chapter_id_index",
+          "columns": [
+            "chapter_id"
+          ],
+          "isUnique": false
+        },
+        "person_customer_id_index": {
+          "name": "person_customer_id_index",
+          "columns": [
+            "last_customer_id"
+          ],
+          "isUnique": false
         }
       },
-      "foreignKeys": {},
+      "foreignKeys": {
+        "person_career_level_id_career_level_id_fk": {
+          "name": "person_career_level_id_career_level_id_fk",
+          "tableFrom": "person",
+          "tableTo": "career_level",
+          "columnsFrom": [
+            "career_level_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "person_chapter_id_chapter_id_fk": {
+          "name": "person_chapter_id_chapter_id_fk",
+          "tableFrom": "person",
+          "tableTo": "chapter",
+          "columnsFrom": [
+            "chapter_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "person_last_customer_id_customer_id_fk": {
+          "name": "person_last_customer_id_customer_id_fk",
+          "tableFrom": "person",
+          "tableTo": "customer",
+          "columnsFrom": [
+            "last_customer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
@@ -63,21 +235,21 @@
           "name": "person_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "skill_id": {
           "name": "skill_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "skill_level_id": {
           "name": "skill_level_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "created_at": {
@@ -169,14 +341,14 @@
           "name": "person_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "skill_id": {
           "name": "skill_id",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false,
+          "notNull": true,
           "autoincrement": false
         },
         "created_at": {

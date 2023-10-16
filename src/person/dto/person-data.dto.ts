@@ -4,8 +4,14 @@ import { z } from 'zod';
 export class PersonDataDto extends zodDto(
   z.object({
     personId: z.number(),
-    pid: z.string().min(1).max(30),
-    otherInformation: z.string().min(1).max(5000).optional(),
+    eid: z.string(),
+    otherInformation: z.string().optional(),
+    lastCustomerId: z.number(),
+    lastCustomerName: z.string(),
+    chapterId: z.number(),
+    chapterName: z.string(),
+    careerLevelId: z.number(),
+    careerLevelName: z.string(),
     skills: z.array(
       z.object({
         skillId: z.number(),

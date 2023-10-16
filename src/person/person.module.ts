@@ -1,23 +1,19 @@
 import { Module } from '@nestjs/common';
 
 import { DrizzleOrmModule } from '../drizzle-orm.module.js';
-import { PersonSkillModule } from '../person-skill/person-skill.module.js';
-import { PersonSkillInterestModule } from '../person-skill-interest/person-skill-interest.module.js';
-import { SkillModule } from '../skill/skill.module.js';
-import { SkillLevelModule } from '../skill-level/skill-level.module.js';
 
-import { PersonController } from './person.controller.js';
-import { PersonRepository } from './person.repository.js';
+import { AddPersonController } from './add-person.controller.js';
+import { GetAllPersonXlsxController } from './get-all-person-xlsx.controller.js';
+import { GetAllPersonController } from './get-all-person.controller.js';
+import { GetAllPersonService } from './get-all-person.service.js';
 
 @Module({
-  imports: [
-    DrizzleOrmModule,
-    PersonSkillModule,
-    SkillLevelModule,
-    SkillModule,
-    PersonSkillInterestModule,
+  imports: [DrizzleOrmModule],
+  controllers: [
+    AddPersonController,
+    GetAllPersonController,
+    GetAllPersonXlsxController,
   ],
-  controllers: [PersonController],
-  providers: [PersonRepository],
+  providers: [GetAllPersonService],
 })
 export class PersonModule {}

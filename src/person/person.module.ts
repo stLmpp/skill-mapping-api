@@ -6,6 +6,8 @@ import { AddPersonController } from './add-person.controller.js';
 import { GetAllPersonXlsxController } from './get-all-person-xlsx.controller.js';
 import { GetAllPersonController } from './get-all-person.controller.js';
 import { GetAllPersonService } from './get-all-person.service.js';
+import { PersonValidationService } from './person-validation.service.js';
+import { UpdatePersonController } from './update-person.controller.js';
 
 @Module({
   imports: [DrizzleOrmModule],
@@ -13,7 +15,8 @@ import { GetAllPersonService } from './get-all-person.service.js';
     AddPersonController,
     GetAllPersonController,
     GetAllPersonXlsxController,
+    UpdatePersonController,
   ],
-  providers: [GetAllPersonService],
+  providers: [GetAllPersonService, PersonValidationService],
 })
 export class PersonModule {}

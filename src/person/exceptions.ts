@@ -30,3 +30,9 @@ export const CareerLevelNotFound = exception({
   status: HttpStatus.BAD_REQUEST,
   errorCode: 'PERSON-0005',
 });
+
+export const PersonNotFound = exception({
+  message: 'Person not found',
+  status: HttpStatus.NOT_FOUND,
+  errorCode: 'PERSON-0006',
+});

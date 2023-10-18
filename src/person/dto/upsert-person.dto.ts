@@ -1,21 +1,11 @@
-import { extendApi, zodDto } from '@assis-delivery/core';
+import { zodDto } from '@assis-delivery/core';
 import { z } from 'zod';
 
-const EIDPattern = '^[.az]{1,255}$';
+import { EIDSchema } from './common.js';
 
 export class UpsertPersonDto extends zodDto(
   z.object({
-    eid: extendApi(
-      z
-        .string()
-        .trim()
-        .min(1)
-        .max(255)
-        .regex(new RegExp(EIDPattern), `Must follow the pattern ${EIDPattern}`),
-      {
-        example: 'john.doe',
-      },
-    ),
+    eid: EIDSchema,
     otherInformation: z
       .string()
       .max(5000)

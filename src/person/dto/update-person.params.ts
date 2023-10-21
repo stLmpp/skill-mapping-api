@@ -1,4 +1,4 @@
-import { ParamIntSchema, zodDto } from '@assis-delivery/core';
+import { ParamIntSchema, zodDto } from '@st-api/core';
 import { z } from 'zod';
 
 import { EIDSchema } from './common.js';

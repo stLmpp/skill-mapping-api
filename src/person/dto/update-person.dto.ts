@@ -1,4 +1,4 @@
-import { zodDto } from '@assis-delivery/core';
+import { zodDto } from '@st-api/core';
 import { z } from 'zod';
 
 export class UpdatePersonDto extends zodDto(

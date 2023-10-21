@@ -1,6 +1,6 @@
-import { CoreModule } from '@assis-delivery/core';
 import { Module } from '@nestjs/common';
 import { RouterModule } from '@nestjs/core';
+import { CoreModule } from '@st-api/core';
 
 import { DrizzleOrmModule } from './drizzle-orm.module.js';
 import { PersonModule } from './person/person.module.js';

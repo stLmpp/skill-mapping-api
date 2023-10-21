@@ -1,6 +1,6 @@
-import { Response } from '@assis-delivery/core';
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Response } from '@st-api/core';
 
 import { Drizzle } from '../drizzle-orm.module.js';
 import { SkillLevelEntity } from '../schema.js';

@@ -1,5 +1,5 @@
-import { exception } from '@assis-delivery/core';
 import { HttpStatus } from '@nestjs/common';
+import { exception } from '@st-api/core';
 
 export const SkillNotFound = exception({
   message: 'Skill not found',

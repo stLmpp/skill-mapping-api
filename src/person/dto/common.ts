@@ -1,4 +1,4 @@
-import { extendApi } from '@assis-delivery/core';
+import { extendApi } from '@st-api/core';
 import { z } from 'zod';
 
 const EIDPattern = '^[.az]{1,255}$';

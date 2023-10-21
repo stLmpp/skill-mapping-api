@@ -1,6 +1,6 @@
-import { Response } from '@assis-delivery/core';
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Response } from '@st-api/core';
 
 import { PersonDataDto } from './dto/person-data.dto.js';
 import { GetAllPersonService } from './get-all-person.service.js';

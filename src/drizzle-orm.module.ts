@@ -18,27 +18,29 @@ if (!existsSync(DATABASE_PATH)) {
   mkdirSync(DATABASE_PATH);
 }
 
+const databaseLogger = new Logger('Database');
 const database = new Database(join(DATABASE_PATH, 'data.db'));
 const drizzleDatabase = drizzle(database, {
-  logger: true,
+  logger: {
+    logQuery(query: string, params: unknown[]) {
+      databaseLogger.debug(`${query} -- params: ${JSON.stringify(params)}`);
+    },
+  },
 });
 migrate(drizzleDatabase, { migrationsFolder: './drizzle' });
+const dataMigrationLogger = new Logger('Data migration');
 for (const migration of DATA_MIGRATIONS) {
   migration
     .run(drizzleDatabase)
     .then(() => {
-      Logger.log(
-        `Migration ${migration.name} run successfully`,
-        'Data migration',
-      );
+      dataMigrationLogger.debug(`Migration ${migration.name} run successfully`);
     })
     .catch((error) => {
-      Logger.error(
+      dataMigrationLogger.error(
         `Error while running migration ${migration.name}: ${JSON.stringify({
           error,
           errorString: String(error),
         })}`,
-        'Data migration',
       );
     });
 }

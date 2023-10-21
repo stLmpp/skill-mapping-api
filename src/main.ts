@@ -1,42 +1,17 @@
-import {
-  addMissingExceptionsOpenapi,
-  internalStateMiddleware,
-} from '@assis-delivery/core';
-import { VersioningType } from '@nestjs/common';
-import { NestFactory } from '@nestjs/core';
-import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
-import compression from 'compression';
-import helmet from 'helmet';
-import { OpenAPIObject } from 'openapi3-ts/oas30';
+import { Logger } from '@nestjs/common';
+import { createApp } from '@st-api/core';
 
 import { AppModule } from './app.module.js';
 
 async function bootstrap() {
-  const app = await NestFactory.create(AppModule);
-  app
-    .use(
-      internalStateMiddleware(),
-      helmet({
-        contentSecurityPolicy: false,
-      }),
-      compression(),
-    )
-    .enableVersioning({
-      type: VersioningType.URI,
-      prefix: 'v',
-    });
-  const config = new DocumentBuilder()
-    .setTitle('API')
-    .setVersion('1.0.0')
-    .build();
-  const document = SwaggerModule.createDocument(app, config, {});
-  addMissingExceptionsOpenapi(document as OpenAPIObject);
-  SwaggerModule.setup('help', app, document, {
-    swaggerOptions: {
-      displayRequestDuration: true,
-    },
+  const { nestApp: app } = await createApp({
+    module: AppModule,
   });
-
-  await app.listen(process.env.PORT ?? 3000);
+  const host = process.env.HOST ?? 'localhost';
+  const port = process.env.PORT ?? 3000;
+  const protocol = process.env.NODE_ENV === 'production' ? 'https' : 'http';
+  await app.listen(port, host);
+  Logger.log(`Listening at ${protocol}://${host}:${port}`);
+  Logger.log(`Help at ${protocol}://${host}:${port}/help`);
 }
 bootstrap();

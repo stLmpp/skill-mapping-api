@@ -1,6 +1,6 @@
-import { Body, Exceptions, Params, Response } from '@assis-delivery/core';
 import { Controller, Patch } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { Body, Exceptions, Params, Response } from '@st-api/core';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 

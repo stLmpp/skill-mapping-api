@@ -11,7 +11,7 @@ import { SkillLevelDto } from './dto/skill-level.dto.js';
 @Controller({
   version: '1',
 })
-export class SkillLevelController {
+export class GetSkillLevelsController {
   constructor(private readonly drizzle: Drizzle) {}
 
   @Response([SkillLevelDto])

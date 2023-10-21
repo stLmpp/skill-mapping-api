@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 
 import { DrizzleOrmModule } from '../drizzle-orm.module.js';
 
-import { SkillLevelController } from './skill-level.controller.js';
+import { GetSkillLevelsController } from './get-skill-levels.controller.js';
 
 @Module({
-  controllers: [SkillLevelController],
+  controllers: [GetSkillLevelsController],
   imports: [DrizzleOrmModule],
 })
 export class SkillLevelModule {}

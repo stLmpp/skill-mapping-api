@@ -1,4 +1,5 @@
 import { Module } from '@nestjs/common';
+import { ConfigModule } from '@nestjs/config';
 
 import { DrizzleOrmModule } from '../drizzle-orm.module.js';
 
@@ -10,7 +11,7 @@ import { PersonValidationService } from './person-validation.service.js';
 import { UpdatePersonController } from './update-person.controller.js';
 
 @Module({
-  imports: [DrizzleOrmModule],
+  imports: [DrizzleOrmModule, ConfigModule],
   controllers: [
     AddPersonController,
     GetAllPersonController,

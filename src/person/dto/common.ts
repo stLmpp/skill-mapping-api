@@ -1,7 +1,7 @@
 import { extendApi } from '@st-api/core';
 import { z } from 'zod';
 
-const EIDPattern = '^[.az]{1,255}$';
+const EIDPattern = '^[.a-z]{1,255}$';
 
 export const EIDSchema = extendApi(
   z

@@ -148,7 +148,7 @@ export class AddPersonController {
           .delete(PersonSkillInterestEntity)
           .where(eq(PersonSkillInterestEntity.personId, currentPerson.id));
         await transaction.update(PersonEntity).set({
-          otherInformation: body.otherInformation ?? null,
+          otherInformation: body.otherInformation || null,
           careerLevelId: body.careerLevelId,
           lastCustomerId: body.lastCustomerId,
           chapterId: body.chapterId,
@@ -159,7 +159,7 @@ export class AddPersonController {
           .insert(PersonEntity)
           .values({
             eid: body.eid,
-            otherInformation: body.otherInformation,
+            otherInformation: body.otherInformation || null,
             lastCustomerId: body.lastCustomerId,
             chapterId: body.chapterId,
             careerLevelId: body.careerLevelId,

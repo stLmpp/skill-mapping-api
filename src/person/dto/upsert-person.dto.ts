@@ -8,6 +8,7 @@ export class UpsertPersonDto extends zodDto(
     eid: EIDSchema,
     otherInformation: z
       .string()
+      .trim()
       .max(5000)
       .optional()
       .describe('Free field to describe other information'),

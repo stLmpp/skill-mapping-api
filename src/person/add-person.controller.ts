@@ -21,8 +21,8 @@ import {
   CareerLevelNotFound,
   ChapterNotFound,
   CustomerNotFound,
-  SkillLevelNotFound,
-  SkillNotFound,
+  SkillLevelNotFoundBadRequest,
+  SkillNotFoundBadRequest,
 } from './exceptions.js';
 
 export const SkillsMustBeUnique = exception({
@@ -49,7 +49,9 @@ export class AddPersonController {
       (skillId) => !skills.some((skill) => skill.id === skillId),
     );
     if (skillIdNotFound) {
-      throw SkillNotFound(`Skill with id ${skillIdNotFound} not found`);
+      throw SkillNotFoundBadRequest(
+        `Skill with id ${skillIdNotFound} not found`,
+      );
     }
   }
 
@@ -64,7 +66,7 @@ export class AddPersonController {
       (skillId) => !skillLevels.some((skill) => skill.id === skillId),
     );
     if (skillLevelIdNotFound) {
-      throw SkillLevelNotFound(
+      throw SkillLevelNotFoundBadRequest(
         `Skill level with id ${skillLevelIdNotFound} not found`,
       );
     }
@@ -111,8 +113,8 @@ export class AddPersonController {
   }
 
   @Exceptions([
-    SkillNotFound,
-    SkillLevelNotFound,
+    SkillNotFoundBadRequest,
+    SkillLevelNotFoundBadRequest,
     SkillsMustBeUnique,
     ChapterNotFound,
     CustomerNotFound,

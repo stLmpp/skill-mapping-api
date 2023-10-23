@@ -1,13 +1,13 @@
 import { HttpStatus } from '@nestjs/common';
 import { exception } from '@st-api/core';
 
-export const SkillNotFound = exception({
+export const SkillNotFoundBadRequest = exception({
   message: 'Skill not found',
   status: HttpStatus.BAD_REQUEST,
   errorCode: 'PERSON-0001',
 });
 
-export const SkillLevelNotFound = exception({
+export const SkillLevelNotFoundBadRequest = exception({
   message: 'Skill level not found',
   status: HttpStatus.BAD_REQUEST,
   errorCode: 'PERSON-0002',
@@ -35,4 +35,10 @@ export const PersonNotFound = exception({
   message: 'Person not found',
   status: HttpStatus.NOT_FOUND,
   errorCode: 'PERSON-0006',
+});
+
+export const SkillNotFound = exception({
+  message: 'Skill not found',
+  status: HttpStatus.NOT_FOUND,
+  errorCode: 'PERSON-0007',
 });

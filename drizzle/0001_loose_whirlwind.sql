@@ -1,0 +1,1 @@
+CREATE UNIQUE INDEX `person_skill_unique_index` ON `person_skill` (`person_id`,`skill_id`);

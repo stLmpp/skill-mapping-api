@@ -1,4 +1,10 @@
-import { index, int, sqliteTable, text } from 'drizzle-orm/sqlite-core';
+import {
+  index,
+  int,
+  sqliteTable,
+  text,
+  uniqueIndex,
+} from 'drizzle-orm/sqlite-core';
 
 export const PersonEntity = sqliteTable(
   'person',
@@ -94,6 +100,10 @@ export const PersonSkillEntity = sqliteTable(
     skillIdIndex: index('person_skill_skill_id_index').on(table.skillId),
     skillLevelIdIndex: index('person_skill_skill_level_id_index').on(
       table.skillLevelId,
+    ),
+    personSkillUniqueIndex: uniqueIndex('person_skill_unique_index').on(
+      table.personId,
+      table.skillId,
     ),
   }),
 );

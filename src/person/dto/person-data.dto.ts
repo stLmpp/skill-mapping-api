@@ -1,7 +1,7 @@
-import { zodDto } from '@st-api/core';
+import { zDto } from '@st-api/core';
 import { z } from 'zod';
 
-export class PersonDataDto extends zodDto(
+export class PersonDataDto extends zDto(
   z.object({
     personId: z.number(),
     eid: z.string(),

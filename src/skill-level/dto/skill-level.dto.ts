@@ -1,7 +1,7 @@
-import { zodDto } from '@st-api/core';
+import { zDto } from '@st-api/core';
 import { z } from 'zod';
 
-export class SkillLevelDto extends zodDto(
+export class SkillLevelDto extends zDto(
   z.object({
     skillLevelId: z.number(),
     skillLevelName: z.string(),

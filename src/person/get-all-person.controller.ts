@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Response } from '@st-api/core';
+import { ZRes } from '@st-api/core';
 
 import { PersonDataDto } from './dto/person-data.dto.js';
 import { GetAllPersonService } from './get-all-person.service.js';
@@ -12,7 +12,7 @@ import { GetAllPersonService } from './get-all-person.service.js';
 export class GetAllPersonController {
   constructor(private readonly getAllPersonService: GetAllPersonService) {}
 
-  @Response([PersonDataDto])
+  @ZRes([PersonDataDto])
   @Get()
   async getAll(): Promise<PersonDataDto[]> {
     return this.getAllPersonService.getAll();

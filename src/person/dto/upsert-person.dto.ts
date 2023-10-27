@@ -1,9 +1,9 @@
-import { zodDto } from '@st-api/core';
+import { zDto } from '@st-api/core';
 import { z } from 'zod';
 
 import { EIDSchema } from './common.js';
 
-export class UpsertPersonDto extends zodDto(
+export class UpsertPersonDto extends zDto(
   z.object({
     eid: EIDSchema,
     otherInformation: z

@@ -1,6 +1,6 @@
 import { Controller, HttpStatus, Post } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Body, exception, Exceptions, Response } from '@st-api/core';
+import { ZBody, exception, Exceptions, ZRes } from '@st-api/core';
 import { eq, inArray } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -120,9 +120,9 @@ export class AddPersonController {
     CustomerNotFound,
     CareerLevelNotFound,
   ])
-  @Response(z.void())
+  @ZRes(z.void())
   @Post()
-  async upsert(@Body() body: UpsertPersonDto): Promise<void> {
+  async upsert(@ZBody() body: UpsertPersonDto): Promise<void> {
     this.assertSkillsAreUnique(body);
     await this.assertChapterExists(body.chapterId);
     await this.assertCustomerExists(body.lastCustomerId);

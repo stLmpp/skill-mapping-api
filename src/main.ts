@@ -1,11 +1,12 @@
 import { Logger } from '@nestjs/common';
-import { createApp } from '@st-api/core';
+import { NestFactory } from '@nestjs/core';
+import { configureApp } from '@st-api/core';
 
 import { AppModule } from './app.module.js';
 
 async function bootstrap() {
-  const { nestApp: app } = await createApp({
-    module: AppModule,
+  const app = configureApp(await NestFactory.create(AppModule), {
+    swagger: {},
   });
   const isDev = process.env.NODE_ENV !== 'production';
   const host = process.env.HOST ?? 'localhost';

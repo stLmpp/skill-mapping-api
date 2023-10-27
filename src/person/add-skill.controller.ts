@@ -1,6 +1,6 @@
 import { Controller, Put } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Body, Exceptions, Params, Response } from '@st-api/core';
+import { ZBody, Exceptions, ZParams, ZRes } from '@st-api/core';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -50,11 +50,11 @@ export class AddSkillController {
   }
 
   @Exceptions([PersonNotFound, SkillNotFound, SkillLevelNotFoundBadRequest])
-  @Response(z.void())
+  @ZRes(z.void())
   @Put()
   async addSkill(
-    @Params() { personId, skillId }: AddSkillParams,
-    @Body() { skillLevelId }: AddSkillDto,
+    @ZParams() { personId, skillId }: AddSkillParams,
+    @ZBody() { skillLevelId }: AddSkillDto,
   ): Promise<void> {
     await this.personValidationService.assertPersonExists(personId);
     await this.assertSkillIdExists(skillId);

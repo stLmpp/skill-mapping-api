@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Response } from '@st-api/core';
+import { ZRes } from '@st-api/core';
 
 import { Drizzle } from '../drizzle-orm.module.js';
 import { ChapterEntity } from '../schema.js';
@@ -14,7 +14,7 @@ import { ChapterDto } from './dto/chapter.dto.js';
 export class GetChaptersController {
   constructor(private readonly drizzle: Drizzle) {}
 
-  @Response([ChapterDto])
+  @ZRes([ChapterDto])
   @Get()
   async getAll(): Promise<ChapterDto[]> {
     return this.drizzle

@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Response } from '@st-api/core';
+import { ZRes } from '@st-api/core';
 
 import { Drizzle } from '../drizzle-orm.module.js';
 import { CareerLevelEntity } from '../schema.js';
@@ -14,7 +14,7 @@ import { CareerLevelDto } from './dto/career-level.dto.js';
 export class GetCareerLevelsController {
   constructor(private readonly drizzle: Drizzle) {}
 
-  @Response([CareerLevelDto])
+  @ZRes([CareerLevelDto])
   @Get()
   async getAll(): Promise<CareerLevelDto[]> {
     return this.drizzle

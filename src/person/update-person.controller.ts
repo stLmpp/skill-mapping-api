@@ -1,6 +1,6 @@
 import { Controller, Patch } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
-import { Body, Exceptions, Params, Response } from '@st-api/core';
+import { ZBody, Exceptions, ZParams, ZRes } from '@st-api/core';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
@@ -39,22 +39,22 @@ export class UpdatePersonController {
     });
   }
 
-  @Response(z.void())
+  @ZRes(z.void())
   @Exceptions([PersonNotFound])
   @Patch(':personId')
   async updateById(
-    @Params() { personId }: UpdatePersonByIdParams,
-    @Body() body: UpdatePersonDto,
+    @ZParams() { personId }: UpdatePersonByIdParams,
+    @ZBody() body: UpdatePersonDto,
   ): Promise<void> {
     await this.update(personId, body);
   }
 
-  @Response(z.void())
+  @ZRes(z.void())
   @Exceptions([PersonNotFound])
   @Patch('eid/:eid')
   async updateByEid(
-    @Params() { eid }: UpdatePersonByEidParams,
-    @Body() body: UpdatePersonDto,
+    @ZParams() { eid }: UpdatePersonByEidParams,
+    @ZBody() body: UpdatePersonDto,
   ): Promise<void> {
     const [person] = await this.drizzle
       .select({ id: PersonEntity.id })

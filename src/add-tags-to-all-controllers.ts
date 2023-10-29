@@ -1,9 +1,19 @@
-import { Type } from '@nestjs/common';
+import { ForwardReference, Type } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { sentenceCase } from 'change-case';
 
-export function addTagsToAllControllers(moduleType: Type): void {
-  if (typeof moduleType !== 'function' || !moduleType.name) {
+function isForwardRef(value: unknown): value is ForwardReference {
+  return !!value && typeof value === 'object' && 'forwardRef' in value;
+}
+
+export function addTagsToAllControllers(
+  moduleType: Type | ForwardReference,
+): void {
+  if (
+    typeof moduleType !== 'function' ||
+    !moduleType.name ||
+    isForwardRef(moduleType)
+  ) {
     return;
   }
   const imports = Reflect.getMetadata('imports', moduleType) ?? [];

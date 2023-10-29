@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/sqlite-core';
 
-import { Drizzle } from '../drizzle-orm.module.js';
+import { Drizzle } from '../../drizzle-orm.module.js';
 import {
   CareerLevelEntity,
   ChapterEntity,
@@ -12,9 +12,9 @@ import {
   PersonSkillInterestEntity,
   SkillEntity,
   SkillLevelEntity,
-} from '../schema.js';
+} from '../../schema.js';
 
-import { PersonDataDto } from './dto/person-data.dto.js';
+import { PersonDataDto } from './person-data.dto.js';
 
 @Injectable()
 export class GetAllPersonService {
@@ -41,14 +41,16 @@ export class GetAllPersonService {
         interestSkillId: personSkillInterestSkillAlias.id,
         interestSkillName: personSkillInterestSkillAlias.name,
         interestId: PersonSkillInterestEntity.id,
+        updatedAt: PersonEntity.updatedAt,
+        createdAt: PersonEntity.createdAt,
       })
       .from(PersonEntity)
-      .innerJoin(
+      .leftJoin(
         PersonSkillEntity,
         eq(PersonEntity.id, PersonSkillEntity.personId),
       )
-      .innerJoin(SkillEntity, eq(PersonSkillEntity.skillId, SkillEntity.id))
-      .innerJoin(
+      .leftJoin(SkillEntity, eq(PersonSkillEntity.skillId, SkillEntity.id))
+      .leftJoin(
         SkillLevelEntity,
         eq(PersonSkillEntity.skillLevelId, SkillLevelEntity.id),
       )
@@ -88,13 +90,23 @@ export class GetAllPersonService {
         chapterName: entity.chapterName,
         lastCustomerId: entity.lastCustomerId,
         lastCustomerName: entity.lastCustomerName,
+        updatedAt: entity.updatedAt ?? entity.createdAt,
       });
-      person.skills[entity.personSkillId] ??= {
-        skillId: entity.skillId,
-        skillLevelId: entity.skillLevelId,
-        skillName: entity.skillName,
-        skillLevelName: entity.skillLevelName,
-      };
+      if (
+        entity.personSkillId &&
+        entity.skillId &&
+        entity.skillLevelId &&
+        entity.skillName &&
+        entity.skillLevelName
+      ) {
+        person.skills[entity.personSkillId] ??= {
+          skillId: entity.skillId,
+          skillLevelId: entity.skillLevelId,
+          skillName: entity.skillName,
+          skillLevelName: entity.skillLevelName,
+        };
+      }
+
       if (
         entity.interestId &&
         entity.interestSkillId &&

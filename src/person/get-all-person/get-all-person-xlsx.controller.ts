@@ -1,11 +1,12 @@
 import { Controller, Get, HttpStatus, Logger, Res } from '@nestjs/common';
-import { ApiResponse, ApiTags } from '@nestjs/swagger';
+import { ApiResponse } from '@nestjs/swagger';
 import { exception, safeAsync } from '@st-api/core';
+import { format } from 'date-fns';
 import ExcelJS from 'exceljs';
-import type { Response as ExpressResponse } from 'express';
+import type { Response } from 'express';
 
-import { PersonDataDto } from './dto/person-data.dto.js';
 import { GetAllPersonService } from './get-all-person.service.js';
+import { PersonDataDto } from './person-data.dto.js';
 
 const XlsxInternalServerError = exception({
   errorCode: 'PERSON-XLSX-0001',
@@ -13,7 +14,6 @@ const XlsxInternalServerError = exception({
   status: HttpStatus.INTERNAL_SERVER_ERROR,
 });
 
-@ApiTags('Person')
 @Controller({
   version: '1',
   path: 'file/xlsx',
@@ -36,7 +36,7 @@ export class GetAllPersonXlsxController {
     description: 'Returns a XLSX file',
   })
   @Get()
-  async getFile(@Res() response: ExpressResponse) {
+  async getFile(@Res() response: Response) {
     const entities = await this.getAllPersonService.getAll();
     const workbook = new ExcelJS.Workbook();
     this.setSummarySheet(workbook, entities);
@@ -67,7 +67,8 @@ export class GetAllPersonXlsxController {
       { key: 'careerLevel', header: 'CL' },
       { key: 'lastCustomer', header: 'Ultimo cliente' },
       { key: 'skills', header: 'Skills' },
-      { key: 'otherInformation', header: 'Outras informacoes' },
+      { key: 'otherInformation', header: 'Outras informações' },
+      { key: 'updatedAt', header: 'Última atualização' },
     ];
     summarySheet.addRows(
       entities.map((entity) => ({
@@ -79,6 +80,7 @@ export class GetAllPersonXlsxController {
         careerLevel: entity.careerLevelName,
         chapter: entity.chapterName,
         lastCustomer: entity.lastCustomerName,
+        updatedAt: format(entity.updatedAt, 'dd/MM/yyyy HH:mm:ss'),
       })),
     );
   }
@@ -96,6 +98,7 @@ export class GetAllPersonXlsxController {
       { key: 'skill', header: 'Skill' },
       { key: 'skillLevel', header: 'Proficiência' },
       { key: 'otherInformation', header: 'Outras informações' },
+      { key: 'updatedAt', header: 'Última atualização' },
     ];
     for (const entity of entities) {
       for (const skill of entity.skills) {

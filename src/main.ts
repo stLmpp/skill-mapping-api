@@ -2,7 +2,10 @@ import { Logger } from '@nestjs/common';
 import { NestFactory } from '@nestjs/core';
 import { configureApp } from '@st-api/core';
 
+import { addTagsToAllControllers } from './add-tags-to-all-controllers.js';
 import { AppModule } from './app.module.js';
+
+addTagsToAllControllers(AppModule);
 
 async function bootstrap() {
   const app = configureApp(await NestFactory.create(AppModule), {

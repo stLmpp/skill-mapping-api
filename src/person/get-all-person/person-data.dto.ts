@@ -12,6 +12,7 @@ export class PersonDataDto extends zDto(
     chapterName: z.string(),
     careerLevelId: z.number(),
     careerLevelName: z.string(),
+    updatedAt: z.date(),
     skills: z.array(
       z.object({
         skillId: z.number(),

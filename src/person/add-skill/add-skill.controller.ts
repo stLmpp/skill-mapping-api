@@ -1,22 +1,24 @@
 import { Controller, Put } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { ZBody, Exceptions, ZParams, ZRes } from '@st-api/core';
-import { eq } from 'drizzle-orm';
+import { Exceptions, ZBody, ZParams, ZRes } from '@st-api/core';
+import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
-import { Drizzle } from '../drizzle-orm.module.js';
-import { PersonSkillEntity, SkillEntity, SkillLevelEntity } from '../schema.js';
-
-import { AddSkillDto } from './dto/add-skill.dto.js';
-import { AddSkillParams } from './dto/add-skill.params.js';
+import { Drizzle } from '../../drizzle-orm.module.js';
+import {
+  PersonSkillEntity,
+  SkillEntity,
+  SkillLevelEntity,
+} from '../../schema.js';
 import {
   PersonNotFound,
   SkillLevelNotFoundBadRequest,
   SkillNotFound,
-} from './exceptions.js';
-import { PersonValidationService } from './person-validation.service.js';
+} from '../exceptions.js';
+import { PersonValidationService } from '../person-validation.service.js';
 
-@ApiTags('Person')
+import { AddSkillDto } from './add-skill.dto.js';
+import { AddSkillParams } from './add-skill.params.js';
+
 @Controller({
   version: '1',
   path: ':personId/skill/:skillId',
@@ -65,8 +67,12 @@ export class AddSkillController {
         id: PersonSkillEntity,
       })
       .from(PersonSkillEntity)
-      .where(eq(PersonSkillEntity.personId, personId))
-      .where(eq(PersonSkillEntity.skillId, skillId));
+      .where(
+        and(
+          eq(PersonSkillEntity.personId, personId),
+          eq(PersonSkillEntity.skillId, skillId),
+        ),
+      );
 
     if (!personSkill) {
       return;

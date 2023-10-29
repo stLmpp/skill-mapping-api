@@ -26,6 +26,7 @@ export const PersonEntity = sqliteTable(
     createdAt: int('created_at', { mode: 'timestamp' })
       .notNull()
       .$defaultFn(() => new Date()),
+    updatedAt: int('updated_at', { mode: 'timestamp' }),
   },
   (table) => ({
     careerLevelIdIndex: index('person_career_level_id_index').on(

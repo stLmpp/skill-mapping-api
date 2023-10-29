@@ -1,11 +1,9 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { ZRes } from '@st-api/core';
 
-import { PersonDataDto } from './dto/person-data.dto.js';
 import { GetAllPersonService } from './get-all-person.service.js';
+import { PersonDataDto } from './person-data.dto.js';
 
-@ApiTags('Person')
 @Controller({
   version: '1',
 })

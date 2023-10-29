@@ -3,22 +3,24 @@ import { ConfigModule } from '@nestjs/config';
 
 import { DrizzleOrmModule } from '../drizzle-orm.module.js';
 
-import { AddPersonController } from './add-person.controller.js';
-import { AddSkillController } from './add-skill.controller.js';
-import { GetAllPersonXlsxController } from './get-all-person-xlsx.controller.js';
-import { GetAllPersonController } from './get-all-person.controller.js';
-import { GetAllPersonService } from './get-all-person.service.js';
+import { AddSkillController } from './add-skill/add-skill.controller.js';
+import { GetAllPersonXlsxController } from './get-all-person/get-all-person-xlsx.controller.js';
+import { GetAllPersonController } from './get-all-person/get-all-person.controller.js';
+import { GetAllPersonService } from './get-all-person/get-all-person.service.js';
 import { PersonValidationService } from './person-validation.service.js';
-import { UpdatePersonController } from './update-person.controller.js';
+import { RemoveSkillController } from './remove-skill/remove-skill.controller.js';
+import { UpdatePersonController } from './update-person/update-person.controller.js';
+import { UpsertPersonController } from './upsert-person/upsert-person.controller.js';
 
 @Module({
   imports: [DrizzleOrmModule, ConfigModule],
   controllers: [
-    AddPersonController,
+    UpsertPersonController,
     GetAllPersonController,
     GetAllPersonXlsxController,
     UpdatePersonController,
     AddSkillController,
+    RemoveSkillController,
   ],
   providers: [GetAllPersonService, PersonValidationService],
 })

@@ -1,21 +1,19 @@
 import { Controller, Patch } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { ZBody, Exceptions, ZParams, ZRes } from '@st-api/core';
+import { Exceptions, ZBody, ZParams, ZRes } from '@st-api/core';
 import { eq } from 'drizzle-orm';
 import { z } from 'zod';
 
-import { Drizzle } from '../drizzle-orm.module.js';
-import { PersonEntity } from '../schema.js';
+import { Drizzle } from '../../drizzle-orm.module.js';
+import { PersonEntity } from '../../schema.js';
+import { PersonNotFound } from '../exceptions.js';
+import { PersonValidationService } from '../person-validation.service.js';
 
-import { UpdatePersonDto } from './dto/update-person.dto.js';
+import { UpdatePersonDto } from './update-person.dto.js';
 import {
   UpdatePersonByEidParams,
   UpdatePersonByIdParams,
-} from './dto/update-person.params.js';
-import { PersonNotFound } from './exceptions.js';
-import { PersonValidationService } from './person-validation.service.js';
+} from './update-person.params.js';
 
-@ApiTags('Person')
 @Controller({
   version: '1',
 })

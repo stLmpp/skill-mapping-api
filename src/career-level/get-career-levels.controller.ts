@@ -1,5 +1,4 @@
 import { Controller, Get } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
 import { ZRes } from '@st-api/core';
 
 import { Drizzle } from '../drizzle-orm.module.js';
@@ -7,7 +6,6 @@ import { CareerLevelEntity } from '../schema.js';
 
 import { CareerLevelDto } from './dto/career-level.dto.js';
 
-@ApiTags('Career level')
 @Controller({
   version: '1',
 })

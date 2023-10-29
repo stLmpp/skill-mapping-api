@@ -1,10 +1,9 @@
 import { Controller, HttpStatus, Post } from '@nestjs/common';
-import { ApiTags } from '@nestjs/swagger';
-import { ZBody, exception, Exceptions, ZRes } from '@st-api/core';
+import { exception, Exceptions, ZBody, ZRes } from '@st-api/core';
 import { eq, inArray } from 'drizzle-orm';
 import { z } from 'zod';
 
-import { Drizzle } from '../drizzle-orm.module.js';
+import { Drizzle } from '../../drizzle-orm.module.js';
 import {
   CareerLevelEntity,
   ChapterEntity,
@@ -14,16 +13,16 @@ import {
   PersonSkillInterestEntity,
   SkillEntity,
   SkillLevelEntity,
-} from '../schema.js';
-
-import { UpsertPersonDto } from './dto/upsert-person.dto.js';
+} from '../../schema.js';
 import {
   CareerLevelNotFound,
   ChapterNotFound,
   CustomerNotFound,
   SkillLevelNotFoundBadRequest,
   SkillNotFoundBadRequest,
-} from './exceptions.js';
+} from '../exceptions.js';
+
+import { UpsertPersonDto } from './upsert-person.dto.js';
 
 export const SkillsMustBeUnique = exception({
   message: 'Skills must be unique',
@@ -32,12 +31,11 @@ export const SkillsMustBeUnique = exception({
   error: 'body.skills must not have duplicated skillIds',
 });
 
-@ApiTags('Person')
 @Controller({
   version: '1',
   path: 'upsert',
 })
-export class AddPersonController {
+export class UpsertPersonController {
   constructor(private readonly drizzle: Drizzle) {}
 
   private async assertSkillsExists(skillIds: number[]): Promise<void> {
@@ -154,6 +152,7 @@ export class AddPersonController {
           careerLevelId: body.careerLevelId,
           lastCustomerId: body.lastCustomerId,
           chapterId: body.chapterId,
+          updatedAt: new Date(),
         });
         personId = currentPerson.id;
       } else {

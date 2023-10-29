@@ -15,6 +15,13 @@
       "when": 1698020012298,
       "tag": "0001_loose_whirlwind",
       "breakpoints": true
+    },
+    {
+      "idx": 2,
+      "version": "5",
+      "when": 1698611350039,
+      "tag": "0002_eager_maginty",
+      "breakpoints": true
     }
   ]
 }

@@ -8,6 +8,7 @@ import { GetAllPersonXlsxController } from './get-all-person/get-all-person-xlsx
 import { GetAllPersonController } from './get-all-person/get-all-person.controller.js';
 import { GetAllPersonService } from './get-all-person/get-all-person.service.js';
 import { PersonValidationService } from './person-validation.service.js';
+import { RemovePersonController } from './remove-person/remove-person.controller.js';
 import { RemoveSkillController } from './remove-skill/remove-skill.controller.js';
 import { UpdatePersonController } from './update-person/update-person.controller.js';
 import { UpsertPersonController } from './upsert-person/upsert-person.controller.js';
@@ -21,6 +22,7 @@ import { UpsertPersonController } from './upsert-person/upsert-person.controller
     UpdatePersonController,
     AddSkillController,
     RemoveSkillController,
+    RemovePersonController,
   ],
   providers: [GetAllPersonService, PersonValidationService],
 })

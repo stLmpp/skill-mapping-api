@@ -21,8 +21,8 @@ dependencies:
     specifier: ~7.1.14
     version: 7.1.14(@nestjs/common@10.2.7)(@nestjs/core@10.2.7)(reflect-metadata@0.1.13)
   '@st-api/core':
-    specifier: ~2.1.1
-    version: 2.1.1(@types/better-sqlite3@7.6.6)(better-sqlite3@9.0.0)
+    specifier: ~2.1.2
+    version: 2.1.2(@types/better-sqlite3@7.6.6)(better-sqlite3@9.0.0)
   better-sqlite3:
     specifier: ~9.0.0
     version: 9.0.0
@@ -164,8 +164,8 @@ packages:
       '@jridgewell/trace-mapping': 0.3.20
     dev: true
 
-  /@anatine/zod-openapi@2.2.0(openapi3-ts@4.1.2)(zod@3.22.4):
-    resolution: {integrity: sha512-Ponwenf2NMIVbs9IuB3YoW7CQPkuRWxhYV/qxBu48DQhmRyipEw/YROVTWnvku7+lwhv1EyP4+h3J5SwrvmfHg==}
+  /@anatine/zod-openapi@2.2.1(openapi3-ts@4.1.2)(zod@3.22.4):
+    resolution: {integrity: sha512-tYWsCc82II3XMR8lJgg8+AHgCbfsKpgzDmcceLW1SRpqiueqYVGW5AE33W4LJTl+WJ2/mET0DWD17biFO7k/Qg==}
     peerDependencies:
       openapi3-ts: ^4.1.2
       zod: ^3.20.0
@@ -1700,10 +1700,10 @@ packages:
       - webdriverio
     dev: true
 
-  /@st-api/core@2.1.1(@types/better-sqlite3@7.6.6)(better-sqlite3@9.0.0):
-    resolution: {integrity: sha512-a3nFETx0YeJzAUFXIqt5ZUi3FuxZ5JMLSi2ixMqa9R5k/f4Y4NVUU0TAqbXHR4ptMcQtdLtGUMX4N7CM8rzORg==}
+  /@st-api/core@2.1.2(@types/better-sqlite3@7.6.6)(better-sqlite3@9.0.0):
+    resolution: {integrity: sha512-GIXF602ARBAZm8wvZv+8I2dBcxBdqu1qxC7H3W1ywTYHaxLXhuenqDbuCWvqzTUHBRTIx6H7nKEEYEPAP9ZwUw==}
     dependencies:
-      '@anatine/zod-openapi': 2.2.0(openapi3-ts@4.1.2)(zod@3.22.4)
+      '@anatine/zod-openapi': 2.2.1(openapi3-ts@4.1.2)(zod@3.22.4)
       '@nestjs/common': 10.2.7(reflect-metadata@0.1.13)(rxjs@7.8.1)
       '@nestjs/config': 3.1.1(@nestjs/common@10.2.7)(reflect-metadata@0.1.13)
       '@nestjs/core': 10.2.7(@nestjs/common@10.2.7)(@nestjs/platform-express@10.2.7)(reflect-metadata@0.1.13)(rxjs@7.8.1)

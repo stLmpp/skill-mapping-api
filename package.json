@@ -28,7 +28,7 @@
     "@nestjs/core": "~10.2.7",
     "@nestjs/platform-express": "~10.2.7",
     "@nestjs/swagger": "~7.1.14",
-    "@st-api/core": "~2.1.1",
+    "@st-api/core": "~2.1.2",
     "better-sqlite3": "~9.0.0",
     "change-case": "^5.1.2",
     "date-fns": "^2.30.0",

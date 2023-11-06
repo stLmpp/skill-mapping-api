@@ -4,11 +4,7 @@ import { and, eq } from 'drizzle-orm';
 import { z } from 'zod';
 
 import { Drizzle } from '../../drizzle-orm.module.js';
-import {
-  PersonSkillEntity,
-  SkillEntity,
-  SkillLevelEntity,
-} from '../../schema.js';
+import { PersonSkillEntity, SkillLevelEntity } from '../../schema.js';
 import {
   PersonNotFound,
   SkillLevelNotFoundBadRequest,
@@ -28,16 +24,6 @@ export class AddSkillController {
     private readonly drizzle: Drizzle,
     private readonly personValidationService: PersonValidationService,
   ) {}
-
-  private async assertSkillIdExists(skillId: number): Promise<void> {
-    const [skill] = await this.drizzle
-      .select({ id: SkillEntity.id })
-      .from(SkillEntity)
-      .where(eq(SkillEntity.id, skillId));
-    if (!skill) {
-      throw SkillNotFound(`Skill with id ${skillId} not found`);
-    }
-  }
 
   private async assertSkillLevelIdExists(skillLevelId: number): Promise<void> {
     const [skillLevel] = await this.drizzle
@@ -59,7 +45,7 @@ export class AddSkillController {
     @ZBody() { skillLevelId }: AddSkillDto,
   ): Promise<void> {
     await this.personValidationService.assertPersonExists(personId);
-    await this.assertSkillIdExists(skillId);
+    await this.personValidationService.assertSkillExists(skillId);
     await this.assertSkillLevelIdExists(skillLevelId);
 
     const [personSkill] = await this.drizzle

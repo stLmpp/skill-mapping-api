@@ -2,9 +2,9 @@ import { Injectable } from '@nestjs/common';
 import { eq } from 'drizzle-orm';
 
 import { Drizzle } from '../drizzle-orm.module.js';
-import { PersonEntity } from '../schema.js';
+import { PersonEntity, SkillEntity } from '../schema.js';
 
-import { PersonNotFound } from './exceptions.js';
+import { PersonNotFound, SkillNotFound } from './exceptions.js';
 
 @Injectable()
 export class PersonValidationService {
@@ -19,6 +19,16 @@ export class PersonValidationService {
       .where(eq(PersonEntity.id, personId));
     if (!person) {
       throw PersonNotFound(`Person with id ${personId} not found`);
+    }
+  }
+
+  async assertSkillExists(skillId: number): Promise<void> {
+    const [skill] = await this.drizzle
+      .select({ id: SkillEntity.id })
+      .from(SkillEntity)
+      .where(eq(SkillEntity.id, skillId));
+    if (!skill) {
+      throw SkillNotFound(`Skill with id ${skillId} not found`);
     }
   }
 }

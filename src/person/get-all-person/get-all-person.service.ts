@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { isAfter } from 'date-fns';
 import { eq } from 'drizzle-orm';
 import { alias } from 'drizzle-orm/sqlite-core';
 
@@ -43,6 +44,10 @@ export class GetAllPersonService {
         interestId: PersonSkillInterestEntity.id,
         updatedAt: PersonEntity.updatedAt,
         createdAt: PersonEntity.createdAt,
+        skillUpdatedAt: PersonSkillEntity.updatedAt,
+        skillCreatedAt: PersonSkillInterestEntity.createdAt,
+        interestUpdatedAt: PersonSkillInterestEntity.updatedAt,
+        interestCreatedAt: PersonSkillInterestEntity.createdAt,
       })
       .from(PersonEntity)
       .leftJoin(
@@ -79,6 +84,19 @@ export class GetAllPersonService {
       }
     > = {};
     for (const entity of entities) {
+      const possibleDates = [
+        entity.updatedAt,
+        entity.skillUpdatedAt,
+        entity.skillCreatedAt,
+        entity.interestCreatedAt,
+        entity.interestUpdatedAt,
+      ];
+      const updatedAt = possibleDates
+        .filter((date): date is NonNullable<typeof date> => !!date)
+        .reduce(
+          (lastDate, date) => (isAfter(date, lastDate) ? date : lastDate),
+          entity.createdAt,
+        );
       const person = (object[entity.personId] ??= {
         skills: {},
         personId: entity.personId,
@@ -90,7 +108,7 @@ export class GetAllPersonService {
         chapterName: entity.chapterName,
         lastCustomerId: entity.lastCustomerId,
         lastCustomerName: entity.lastCustomerName,
-        updatedAt: entity.updatedAt ?? entity.createdAt,
+        updatedAt,
       });
       if (
         entity.personSkillId &&

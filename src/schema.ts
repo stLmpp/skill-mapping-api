@@ -95,6 +95,7 @@ export const PersonSkillEntity = sqliteTable(
     createdAt: int('created_at', { mode: 'timestamp' })
       .notNull()
       .$defaultFn(() => new Date()),
+    updatedAt: int('updated_at', { mode: 'timestamp' }),
   },
   (table) => ({
     personIdIndex: index('person_skill_person_id_index').on(table.personId),
@@ -122,6 +123,7 @@ export const PersonSkillInterestEntity = sqliteTable(
     createdAt: int('created_at', { mode: 'timestamp' })
       .notNull()
       .$defaultFn(() => new Date()),
+    updatedAt: int('updated_at', { mode: 'timestamp' }),
   },
   (table) => ({
     personIdIndex: index('person_skill_interest_person_id_index').on(
@@ -129,6 +131,47 @@ export const PersonSkillInterestEntity = sqliteTable(
     ),
     skillIdIndex: index('person_skill_interest_skill_id_index').on(
       table.skillId,
+    ),
+  }),
+);
+
+export const LanguageEntity = sqliteTable('language', {
+  id: int('id').primaryKey({ autoIncrement: true }),
+  name: text('name', { length: 255 }).notNull(),
+  createdAt: int('created_at', { mode: 'timestamp' })
+    .notNull()
+    .$defaultFn(() => new Date()),
+});
+
+export const PersonLanguageEntity = sqliteTable(
+  'person_language',
+  {
+    id: int('id').primaryKey({ autoIncrement: true }),
+    personId: int('person_id')
+      .notNull()
+      .references(() => PersonEntity.id),
+    languageId: int('language_id')
+      .notNull()
+      .references(() => LanguageEntity.id),
+    skillLevelId: int('skill_level_id')
+      .notNull()
+      .references(() => SkillLevelEntity.id),
+    createdAt: int('created_at', { mode: 'timestamp' })
+      .notNull()
+      .$defaultFn(() => new Date()),
+    updatedAt: int('updated_at', { mode: 'timestamp' }),
+  },
+  (table) => ({
+    personIdIndex: index('person_language_person_id_index').on(table.personId),
+    languageIdIndex: index('person_language_language_id_index').on(
+      table.languageId,
+    ),
+    skillLevelIdIndex: index('person_language_skill_level_id_index').on(
+      table.skillLevelId,
+    ),
+    personSkillUniqueIndex: uniqueIndex('person_language_unique_index').on(
+      table.personId,
+      table.languageId,
     ),
   }),
 );

@@ -1,7 +1,7 @@
 import { Controller, Get, HttpStatus, Logger, Res } from '@nestjs/common';
 import { ApiResponse } from '@nestjs/swagger';
 import { exception, safeAsync } from '@st-api/core';
-import { format } from 'date-fns';
+import { format, isBefore, subMonths } from 'date-fns';
 import ExcelJS from 'exceljs';
 import type { Response } from 'express';
 
@@ -40,7 +40,8 @@ export class GetAllPersonXlsxController {
     const entities = await this.getAllPersonService.getAll();
     const workbook = new ExcelJS.Workbook();
     this.setSummarySheet(workbook, entities);
-    this.setDetailedSheet(workbook, entities);
+    this.setSkillsSheet(workbook, entities);
+    this.setInterestSheet(workbook, entities);
     response.contentType(
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     );
@@ -70,8 +71,8 @@ export class GetAllPersonXlsxController {
       { key: 'otherInformation', header: 'Outras informações' },
       { key: 'updatedAt', header: 'Última atualização' },
     ];
-    summarySheet.addRows(
-      entities.map((entity) => ({
+    for (const entity of entities) {
+      const row = summarySheet.addRow({
         eid: entity.eid,
         skills: entity.skills
           .map((skill) => `${skill.skillName}: ${skill.skillLevelName}`)
@@ -81,15 +82,29 @@ export class GetAllPersonXlsxController {
         chapter: entity.chapterName,
         lastCustomer: entity.lastCustomerName,
         updatedAt: format(entity.updatedAt, 'dd/MM/yyyy HH:mm:ss'),
-      })),
-    );
+      });
+      const updatedAtCell = row.getCell('updatedAt');
+      if (!updatedAtCell) {
+        continue;
+      }
+      const _3MonthsAgo = subMonths(new Date(), 3);
+      const _5MonthsAgo = subMonths(new Date(), 5);
+      let argb = '#FF3BD200';
+      if (isBefore(entity.updatedAt, _3MonthsAgo)) {
+        argb = '#FFFF9900';
+      }
+      if (isBefore(entity.updatedAt, _5MonthsAgo)) {
+        argb = '#FFFF0000';
+      }
+      updatedAtCell.font = { color: { argb } };
+    }
   }
 
-  private setDetailedSheet(
+  private setSkillsSheet(
     workbook: ExcelJS.Workbook,
     entities: PersonDataDto[],
   ) {
-    const detailedSheet = workbook.addWorksheet('Detalhes');
+    const detailedSheet = workbook.addWorksheet('Skills');
     detailedSheet.columns = [
       { key: 'eid', header: 'EID' },
       { key: 'chapter', header: 'Chapter' },
@@ -98,7 +113,6 @@ export class GetAllPersonXlsxController {
       { key: 'skill', header: 'Skill' },
       { key: 'skillLevel', header: 'Proficiência' },
       { key: 'otherInformation', header: 'Outras informações' },
-      { key: 'updatedAt', header: 'Última atualização' },
     ];
     for (const entity of entities) {
       for (const skill of entity.skills) {
@@ -106,6 +120,33 @@ export class GetAllPersonXlsxController {
           eid: entity.eid,
           skill: skill.skillName,
           skillLevel: skill.skillLevelName,
+          otherInformation: entity.otherInformation,
+          careerLevel: entity.careerLevelName,
+          chapter: entity.chapterName,
+          lastCustomer: entity.lastCustomerName,
+        });
+      }
+    }
+  }
+
+  private setInterestSheet(
+    workbook: ExcelJS.Workbook,
+    entities: PersonDataDto[],
+  ) {
+    const detailedSheet = workbook.addWorksheet('Interesses');
+    detailedSheet.columns = [
+      { key: 'eid', header: 'EID' },
+      { key: 'chapter', header: 'Chapter' },
+      { key: 'careerLevel', header: 'CL' },
+      { key: 'lastCustomer', header: 'Ultimo cliente' },
+      { key: 'skill', header: 'Skill' },
+      { key: 'otherInformation', header: 'Outras informações' },
+    ];
+    for (const entity of entities) {
+      for (const skill of entity.interest) {
+        detailedSheet.addRow({
+          eid: entity.eid,
+          skill: skill.skillName,
           otherInformation: entity.otherInformation,
           careerLevel: entity.careerLevelName,
           chapter: entity.chapterName,

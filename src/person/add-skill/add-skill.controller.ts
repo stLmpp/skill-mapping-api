@@ -60,7 +60,7 @@ export class AddSkillController {
         ),
       );
 
-    if (!personSkill) {
+    if (personSkill) {
       return;
     }
 

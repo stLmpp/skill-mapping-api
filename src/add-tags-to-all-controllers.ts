@@ -1,4 +1,4 @@
-import { ForwardReference, Type } from '@nestjs/common';
+import { ForwardReference } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { sentenceCase } from 'change-case';
 
@@ -6,9 +6,7 @@ function isForwardRef(value: unknown): value is ForwardReference {
   return !!value && typeof value === 'object' && 'forwardRef' in value;
 }
 
-export function addTagsToAllControllers(
-  moduleType: Type | ForwardReference,
-): void {
+export function addTagsToAllControllers(moduleType: unknown): void {
   if (
     typeof moduleType !== 'function' ||
     !moduleType.name ||

@@ -42,6 +42,7 @@ export class GetAllPersonXlsxController {
     this.setSummarySheet(workbook, entities);
     this.setSkillsSheet(workbook, entities);
     this.setInterestSheet(workbook, entities);
+    this.setLanguageSheet(workbook, entities);
     response.contentType(
       'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet',
     );
@@ -147,6 +148,35 @@ export class GetAllPersonXlsxController {
         detailedSheet.addRow({
           eid: entity.eid,
           skill: skill.skillName,
+          otherInformation: entity.otherInformation,
+          careerLevel: entity.careerLevelName,
+          chapter: entity.chapterName,
+          lastCustomer: entity.lastCustomerName,
+        });
+      }
+    }
+  }
+
+  private setLanguageSheet(
+    workbook: ExcelJS.Workbook,
+    entities: PersonDataDto[],
+  ) {
+    const detailedSheet = workbook.addWorksheet('Idiomas');
+    detailedSheet.columns = [
+      { key: 'eid', header: 'EID' },
+      { key: 'chapter', header: 'Chapter' },
+      { key: 'careerLevel', header: 'CL' },
+      { key: 'lastCustomer', header: 'Ultimo cliente' },
+      { key: 'language', header: 'Idioma' },
+      { key: 'skillLevel', header: 'Proficiência' },
+      { key: 'otherInformation', header: 'Outras informações' },
+    ];
+    for (const entity of entities) {
+      for (const language of entity.languages) {
+        detailedSheet.addRow({
+          eid: entity.eid,
+          language: language.languageName,
+          skillLevel: language.skillLevelName,
           otherInformation: entity.otherInformation,
           careerLevel: entity.careerLevelName,
           chapter: entity.chapterName,

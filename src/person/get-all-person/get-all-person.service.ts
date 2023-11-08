@@ -26,7 +26,7 @@ export class GetAllPersonService {
   async getAll(): Promise<PersonDataDto[]> {
     const personSkillInterestSkillAlias = alias(SkillEntity, 'skill_interest');
     const personLanguageSkillLevelAlias = alias(
-      LanguageEntity,
+      SkillLevelEntity,
       'person_language_skill_level',
     );
     const entities = await this.drizzle
@@ -58,6 +58,8 @@ export class GetAllPersonService {
         languageName: LanguageEntity.name,
         languageSkillLevelId: PersonLanguageEntity.skillLevelId,
         languageSkillLevelName: personLanguageSkillLevelAlias.name,
+        languageCreatedAt: PersonLanguageEntity.createdAt,
+        languageUpdatedAt: PersonLanguageEntity.updatedAt,
       })
       .from(PersonEntity)
       .leftJoin(
@@ -114,6 +116,8 @@ export class GetAllPersonService {
         entity.skillCreatedAt,
         entity.interestCreatedAt,
         entity.interestUpdatedAt,
+        entity.languageCreatedAt,
+        entity.languageUpdatedAt,
       ];
       const updatedAt = possibleDates
         .filter((date): date is NonNullable<typeof date> => !!date)

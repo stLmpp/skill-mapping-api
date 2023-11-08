@@ -9,6 +9,7 @@ import {
   ChapterEntity,
   CustomerEntity,
   PersonEntity,
+  PersonLanguageEntity,
   PersonSkillEntity,
   PersonSkillInterestEntity,
   SkillEntity,
@@ -147,6 +148,9 @@ export class UpsertPersonController {
         await transaction
           .delete(PersonSkillInterestEntity)
           .where(eq(PersonSkillInterestEntity.personId, currentPerson.id));
+        await transaction
+          .delete(PersonLanguageEntity)
+          .where(eq(PersonLanguageEntity.personId, currentPerson.id));
         await transaction.update(PersonEntity).set({
           otherInformation: body.otherInformation || null,
           careerLevelId: body.careerLevelId,
@@ -182,6 +186,16 @@ export class UpsertPersonController {
           body.interests.map((skillId) => ({
             skillId,
             personId,
+          })),
+        );
+      }
+
+      if (body.languages?.length) {
+        await transaction.insert(PersonLanguageEntity).values(
+          body.languages.map((language) => ({
+            personId,
+            languageId: language.languageId,
+            skillLevelId: language.skillLevelId,
           })),
         );
       }

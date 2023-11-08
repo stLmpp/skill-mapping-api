@@ -32,5 +32,13 @@ export class PersonDataDto extends zDto(
         skillName: z.string(),
       }),
     ),
+    languages: z.array(
+      z.object({
+        languageId: z.number(),
+        languageName: z.string(),
+        skillLevelId: z.number(),
+        skillLevelName: z.string(),
+      }),
+    ),
   }),
 ) {}

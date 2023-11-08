@@ -24,5 +24,13 @@ export class UpsertPersonDto extends zDto(
       )
       .min(1),
     interests: z.array(z.number().safe().min(1)).optional(),
+    languages: z
+      .array(
+        z.object({
+          languageId: z.number().safe().min(1),
+          skillLevelId: z.number().safe().min(1),
+        }),
+      )
+      .optional(),
   }),
 ) {}

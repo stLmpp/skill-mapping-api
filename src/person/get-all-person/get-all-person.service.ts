@@ -8,7 +8,9 @@ import {
   CareerLevelEntity,
   ChapterEntity,
   CustomerEntity,
+  LanguageEntity,
   PersonEntity,
+  PersonLanguageEntity,
   PersonSkillEntity,
   PersonSkillInterestEntity,
   SkillEntity,
@@ -23,6 +25,10 @@ export class GetAllPersonService {
 
   async getAll(): Promise<PersonDataDto[]> {
     const personSkillInterestSkillAlias = alias(SkillEntity, 'skill_interest');
+    const personLanguageSkillLevelAlias = alias(
+      LanguageEntity,
+      'person_language_skill_level',
+    );
     const entities = await this.drizzle
       .select({
         eid: PersonEntity.eid,
@@ -48,6 +54,10 @@ export class GetAllPersonService {
         skillCreatedAt: PersonSkillInterestEntity.createdAt,
         interestUpdatedAt: PersonSkillInterestEntity.updatedAt,
         interestCreatedAt: PersonSkillInterestEntity.createdAt,
+        languageId: PersonLanguageEntity.languageId,
+        languageName: LanguageEntity.name,
+        languageSkillLevelId: PersonLanguageEntity.skillLevelId,
+        languageSkillLevelName: personLanguageSkillLevelAlias.name,
       })
       .from(PersonEntity)
       .leftJoin(
@@ -75,12 +85,26 @@ export class GetAllPersonService {
       .leftJoin(
         personSkillInterestSkillAlias,
         eq(personSkillInterestSkillAlias.id, PersonSkillInterestEntity.skillId),
+      )
+      .leftJoin(
+        PersonLanguageEntity,
+        eq(PersonLanguageEntity.personId, PersonEntity.id),
+      )
+      .leftJoin(
+        LanguageEntity,
+        eq(PersonLanguageEntity.languageId, LanguageEntity.id),
+      )
+      .leftJoin(
+        personLanguageSkillLevelAlias,
+        eq(PersonLanguageEntity.skillLevelId, personLanguageSkillLevelAlias.id),
       );
+
     const object: Record<
       number,
-      Omit<PersonDataDto, 'interest' | 'skills'> & {
+      Omit<PersonDataDto, 'interest' | 'skills' | 'languages'> & {
         skills: Record<number, PersonDataDto['skills'][number]>;
         interests?: Record<number, PersonDataDto['interest'][number]>;
+        languages?: Record<number, PersonDataDto['languages'][number]>;
       }
     > = {};
     for (const entity of entities) {
@@ -136,11 +160,28 @@ export class GetAllPersonService {
           skillName: entity.interestSkillName,
         };
       }
+
+      if (
+        entity.languageId &&
+        entity.languageName &&
+        entity.languageSkillLevelId &&
+        entity.languageSkillLevelName
+      ) {
+        person.languages ??= {};
+        person.languages[entity.languageId] ??= {
+          skillLevelId: entity.languageSkillLevelId,
+          languageId: entity.languageId,
+          languageName: entity.languageName,
+          skillLevelName: entity.languageSkillLevelName,
+        };
+      }
     }
+
     return Object.values(object).map((person) => ({
       ...person,
       skills: Object.values(person.skills),
       interest: Object.values(person.interests ?? {}),
+      languages: Object.values(person.languages ?? {}),
     }));
   }
 }

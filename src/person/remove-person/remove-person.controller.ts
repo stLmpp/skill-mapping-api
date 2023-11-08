@@ -6,6 +6,7 @@ import { z } from 'zod';
 import { Drizzle } from '../../drizzle-orm.module.js';
 import {
   PersonEntity,
+  PersonLanguageEntity,
   PersonSkillEntity,
   PersonSkillInterestEntity,
 } from '../../schema.js';
@@ -31,6 +32,9 @@ export class RemovePersonController {
       await transaction
         .delete(PersonSkillInterestEntity)
         .where(eq(PersonSkillInterestEntity.personId, personId));
+      await transaction
+        .delete(PersonLanguageEntity)
+        .where(eq(PersonLanguageEntity.personId, personId));
       await transaction
         .delete(PersonEntity)
         .where(eq(PersonEntity.id, personId));

@@ -8,6 +8,7 @@ import {
   CareerLevelEntity,
   ChapterEntity,
   CustomerEntity,
+  JobRoleEntity,
   LanguageEntity,
   PersonEntity,
   PersonLanguageEntity,
@@ -61,6 +62,8 @@ export class GetAllPersonService {
         languageCreatedAt: PersonLanguageEntity.createdAt,
         languageUpdatedAt: PersonLanguageEntity.updatedAt,
         peopleLeadEid: PersonEntity.peopleLeadEid,
+        lastJobRoleId: PersonEntity.lastJobRoleId,
+        lastJobRoleName: JobRoleEntity.name,
       })
       .from(PersonEntity)
       .leftJoin(
@@ -100,6 +103,10 @@ export class GetAllPersonService {
       .leftJoin(
         personLanguageSkillLevelAlias,
         eq(PersonLanguageEntity.skillLevelId, personLanguageSkillLevelAlias.id),
+      )
+      .innerJoin(
+        JobRoleEntity,
+        eq(PersonEntity.lastJobRoleId, JobRoleEntity.id),
       );
 
     const object: Record<
@@ -139,6 +146,8 @@ export class GetAllPersonService {
         lastCustomerName: entity.lastCustomerName,
         updatedAt,
         peopleLeadEid: entity.peopleLeadEid ?? undefined,
+        lastJobRoleId: entity.lastJobRoleId,
+        lastJobRoleName: entity.lastCustomerName,
       });
       if (
         entity.personSkillId &&

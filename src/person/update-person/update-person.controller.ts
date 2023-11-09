@@ -34,6 +34,7 @@ export class UpdatePersonController {
       lastCustomerId,
       careerLevelId,
       peopleLeadEid,
+      lastJobRoleId,
     } = body;
     await this.drizzle.update(PersonEntity).set({
       chapterId,
@@ -41,6 +42,7 @@ export class UpdatePersonController {
       otherInformation,
       careerLevelId,
       peopleLeadEid,
+      lastJobRoleId,
     });
   }
 

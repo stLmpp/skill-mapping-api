@@ -22,6 +22,9 @@ export const PersonEntity = sqliteTable(
     lastCustomerId: int('last_customer_id')
       .notNull()
       .references(() => CustomerEntity.id),
+    lastJobRoleId: int('last_job_role_id')
+      .notNull()
+      .references(() => JobRoleEntity.id),
     otherInformation: text('other_information', { length: 5000 }),
     peopleLeadEid: text('people_lead_eid', { length: 255 }),
     createdAt: int('created_at', { mode: 'timestamp' })
@@ -36,6 +39,9 @@ export const PersonEntity = sqliteTable(
     chapterIdIndex: index('person_chapter_id_index').on(table.chapterId),
     lastCustomerIdIndex: index('person_customer_id_index').on(
       table.lastCustomerId,
+    ),
+    lastJobRoleIdIndex: index('person_last_job_role_id_index').on(
+      table.lastJobRoleId,
     ),
   }),
 );
@@ -178,3 +184,11 @@ export const PersonLanguageEntity = sqliteTable(
     ),
   }),
 );
+
+export const JobRoleEntity = sqliteTable('job_role', {
+  id: int('id').primaryKey({ autoIncrement: true }),
+  name: text('name', { length: 255 }).notNull(),
+  createdAt: int('created_at', { mode: 'timestamp' })
+    .notNull()
+    .$defaultFn(() => new Date()),
+});

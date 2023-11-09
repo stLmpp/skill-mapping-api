@@ -13,6 +13,8 @@ export class PersonDataDto extends zDto(
     careerLevelId: z.number(),
     careerLevelName: z.string(),
     peopleLeadEid: z.string().optional(),
+    lastJobRoleId: z.number(),
+    lastJobRoleName: z.string(),
     updatedAt: z
       .date()
       .describe(

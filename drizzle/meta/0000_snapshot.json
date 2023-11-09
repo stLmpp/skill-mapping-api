@@ -1,7 +1,7 @@
 {
   "version": "5",
   "dialect": "sqlite",
-  "id": "7b2ebc61-6c2b-4ffd-9174-270b1b55c813",
+  "id": "836281d7-2303-47a3-a796-87d22f1fdc05",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "tables": {
     "career_level": {
@@ -94,6 +94,66 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
+    "job_role": {
+      "name": "job_role",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "language": {
+      "name": "language",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "name": {
+          "name": "name",
+          "type": "text(255)",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        }
+      },
+      "indexes": {},
+      "foreignKeys": {},
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
     "person": {
       "name": "person",
       "columns": {
@@ -132,9 +192,23 @@
           "notNull": true,
           "autoincrement": false
         },
+        "last_job_role_id": {
+          "name": "last_job_role_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
         "other_information": {
           "name": "other_information",
           "type": "text(5000)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
+        "people_lead_eid": {
+          "name": "people_lead_eid",
+          "type": "text(255)",
           "primaryKey": false,
           "notNull": false,
           "autoincrement": false
@@ -144,6 +218,13 @@
           "type": "integer",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         }
       },
@@ -173,6 +254,13 @@
           "name": "person_customer_id_index",
           "columns": [
             "last_customer_id"
+          ],
+          "isUnique": false
+        },
+        "person_last_job_role_id_index": {
+          "name": "person_last_job_role_id_index",
+          "columns": [
+            "last_job_role_id"
           ],
           "isUnique": false
         }
@@ -210,6 +298,140 @@
           "tableTo": "customer",
           "columnsFrom": [
             "last_customer_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "person_last_job_role_id_job_role_id_fk": {
+          "name": "person_last_job_role_id_job_role_id_fk",
+          "tableFrom": "person",
+          "tableTo": "job_role",
+          "columnsFrom": [
+            "last_job_role_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "person_language": {
+      "name": "person_language",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "integer",
+          "primaryKey": true,
+          "notNull": true,
+          "autoincrement": true
+        },
+        "person_id": {
+          "name": "person_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "language_id": {
+          "name": "language_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "skill_level_id": {
+          "name": "skill_level_id",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "created_at": {
+          "name": "created_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true,
+          "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        }
+      },
+      "indexes": {
+        "person_language_person_id_index": {
+          "name": "person_language_person_id_index",
+          "columns": [
+            "person_id"
+          ],
+          "isUnique": false
+        },
+        "person_language_language_id_index": {
+          "name": "person_language_language_id_index",
+          "columns": [
+            "language_id"
+          ],
+          "isUnique": false
+        },
+        "person_language_skill_level_id_index": {
+          "name": "person_language_skill_level_id_index",
+          "columns": [
+            "skill_level_id"
+          ],
+          "isUnique": false
+        },
+        "person_language_unique_index": {
+          "name": "person_language_unique_index",
+          "columns": [
+            "person_id",
+            "language_id"
+          ],
+          "isUnique": true
+        }
+      },
+      "foreignKeys": {
+        "person_language_person_id_person_id_fk": {
+          "name": "person_language_person_id_person_id_fk",
+          "tableFrom": "person_language",
+          "tableTo": "person",
+          "columnsFrom": [
+            "person_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "person_language_language_id_language_id_fk": {
+          "name": "person_language_language_id_language_id_fk",
+          "tableFrom": "person_language",
+          "tableTo": "language",
+          "columnsFrom": [
+            "language_id"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "no action",
+          "onUpdate": "no action"
+        },
+        "person_language_skill_level_id_skill_level_id_fk": {
+          "name": "person_language_skill_level_id_skill_level_id_fk",
+          "tableFrom": "person_language",
+          "tableTo": "skill_level",
+          "columnsFrom": [
+            "skill_level_id"
           ],
           "columnsTo": [
             "id"
@@ -258,6 +480,13 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
@@ -281,6 +510,14 @@
             "skill_level_id"
           ],
           "isUnique": false
+        },
+        "person_skill_unique_index": {
+          "name": "person_skill_unique_index",
+          "columns": [
+            "person_id",
+            "skill_id"
+          ],
+          "isUnique": true
         }
       },
       "foreignKeys": {
@@ -357,6 +594,13 @@
           "primaryKey": false,
           "notNull": true,
           "autoincrement": false
+        },
+        "updated_at": {
+          "name": "updated_at",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
         }
       },
       "indexes": {
@@ -423,6 +667,13 @@
           "notNull": true,
           "autoincrement": false
         },
+        "description": {
+          "name": "description",
+          "type": "text(2048)",
+          "primaryKey": false,
+          "notNull": false,
+          "autoincrement": false
+        },
         "created_at": {
           "name": "created_at",
           "type": "integer",
@@ -451,6 +702,13 @@
           "type": "text(255)",
           "primaryKey": false,
           "notNull": true,
+          "autoincrement": false
+        },
+        "description": {
+          "name": "description",
+          "type": "text(2048)",
+          "primaryKey": false,
+          "notNull": false,
           "autoincrement": false
         },
         "created_at": {

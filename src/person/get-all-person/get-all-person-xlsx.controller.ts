@@ -68,6 +68,7 @@ export class GetAllPersonXlsxController {
       { key: 'chapter', header: 'Chapter' },
       { key: 'careerLevel', header: 'CL' },
       { key: 'lastCustomer', header: 'Ultimo cliente' },
+      { key: 'lastJobRole', header: 'Ultima função' },
       { key: 'skills', header: 'Skills' },
       { key: 'otherInformation', header: 'Outras informações' },
       { key: 'peopleLead', header: 'People Lead' },
@@ -85,6 +86,7 @@ export class GetAllPersonXlsxController {
         lastCustomer: entity.lastCustomerName,
         updatedAt: format(entity.updatedAt, 'dd/MM/yyyy HH:mm:ss'),
         peopleLead: entity.peopleLeadEid,
+        lastJobRole: entity.lastJobRoleName,
       });
       const updatedAtCell = row.getCell('updatedAt');
       if (!updatedAtCell) {
@@ -113,6 +115,7 @@ export class GetAllPersonXlsxController {
       { key: 'chapter', header: 'Chapter' },
       { key: 'careerLevel', header: 'CL' },
       { key: 'lastCustomer', header: 'Ultimo cliente' },
+      { key: 'lastJobRole', header: 'Ultima função' },
       { key: 'skill', header: 'Skill' },
       { key: 'skillLevel', header: 'Proficiência' },
       { key: 'otherInformation', header: 'Outras informações' },
@@ -127,6 +130,7 @@ export class GetAllPersonXlsxController {
           careerLevel: entity.careerLevelName,
           chapter: entity.chapterName,
           lastCustomer: entity.lastCustomerName,
+          lastJobRole: entity.lastJobRoleName,
         });
       }
     }
@@ -142,6 +146,7 @@ export class GetAllPersonXlsxController {
       { key: 'chapter', header: 'Chapter' },
       { key: 'careerLevel', header: 'CL' },
       { key: 'lastCustomer', header: 'Ultimo cliente' },
+      { key: 'lastJobRole', header: 'Ultima função' },
       { key: 'skill', header: 'Skill' },
       { key: 'otherInformation', header: 'Outras informações' },
     ];
@@ -154,6 +159,7 @@ export class GetAllPersonXlsxController {
           careerLevel: entity.careerLevelName,
           chapter: entity.chapterName,
           lastCustomer: entity.lastCustomerName,
+          lastJobRole: entity.lastJobRoleName,
         });
       }
     }
@@ -169,6 +175,7 @@ export class GetAllPersonXlsxController {
       { key: 'chapter', header: 'Chapter' },
       { key: 'careerLevel', header: 'CL' },
       { key: 'lastCustomer', header: 'Ultimo cliente' },
+      { key: 'lastJobRole', header: 'Ultima função' },
       { key: 'language', header: 'Idioma' },
       { key: 'skillLevel', header: 'Proficiência' },
       { key: 'otherInformation', header: 'Outras informações' },
@@ -183,6 +190,7 @@ export class GetAllPersonXlsxController {
           careerLevel: entity.careerLevelName,
           chapter: entity.chapterName,
           lastCustomer: entity.lastCustomerName,
+          lastJobRole: entity.lastJobRoleName,
         });
       }
     }

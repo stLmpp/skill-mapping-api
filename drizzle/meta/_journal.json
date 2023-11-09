@@ -5,43 +5,8 @@
     {
       "idx": 0,
       "version": "5",
-      "when": 1697237760588,
-      "tag": "0000_misty_goliath",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "5",
-      "when": 1698020012298,
-      "tag": "0001_loose_whirlwind",
-      "breakpoints": true
-    },
-    {
-      "idx": 2,
-      "version": "5",
-      "when": 1698611350039,
-      "tag": "0002_eager_maginty",
-      "breakpoints": true
-    },
-    {
-      "idx": 3,
-      "version": "5",
-      "when": 1699321931903,
-      "tag": "0003_lyrical_kulan_gath",
-      "breakpoints": true
-    },
-    {
-      "idx": 4,
-      "version": "5",
-      "when": 1699323261974,
-      "tag": "0004_dapper_impossible_man",
-      "breakpoints": true
-    },
-    {
-      "idx": 5,
-      "version": "5",
-      "when": 1699539383806,
-      "tag": "0005_concerned_iceman",
+      "when": 1699551720771,
+      "tag": "0000_dazzling_miracleman",
       "breakpoints": true
     }
   ]

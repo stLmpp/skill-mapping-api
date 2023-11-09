@@ -158,6 +158,7 @@ export class UpsertPersonController {
           chapterId: body.chapterId,
           updatedAt: new Date(),
           peopleLeadEid: body.peopleLeadEid || null,
+          lastJobRoleId: body.lastJobRoleId,
         });
         personId = currentPerson.id;
       } else {
@@ -170,6 +171,7 @@ export class UpsertPersonController {
             chapterId: body.chapterId,
             careerLevelId: body.careerLevelId,
             peopleLeadEid: body.peopleLeadEid || null,
+            lastJobRoleId: body.lastJobRoleId,
           })
           .returning({ id: PersonEntity.id });
         personId = newPerson!.id;

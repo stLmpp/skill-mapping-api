@@ -5,5 +5,6 @@ export class SkillDto extends zDto(
   z.object({
     skillId: z.number(),
     skillName: z.string(),
+    skillDescription: z.string().optional(),
   }),
 ) {}

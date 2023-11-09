@@ -28,12 +28,19 @@ export class UpdatePersonController {
     if (!Object.keys(body).length) {
       return;
     }
-    const { chapterId, otherInformation, lastCustomerId, careerLevelId } = body;
+    const {
+      chapterId,
+      otherInformation,
+      lastCustomerId,
+      careerLevelId,
+      peopleLeadEid,
+    } = body;
     await this.drizzle.update(PersonEntity).set({
       chapterId,
       lastCustomerId,
       otherInformation,
       careerLevelId,
+      peopleLeadEid,
     });
   }
 

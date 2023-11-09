@@ -15,6 +15,7 @@ export class UpsertPersonDto extends zDto(
     lastCustomerId: z.number().safe().min(1),
     chapterId: z.number().safe().min(1),
     careerLevelId: z.number().safe().min(1),
+    peopleLeadEid: EIDSchema.optional(),
     skills: z
       .array(
         z.object({

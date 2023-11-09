@@ -23,6 +23,7 @@ export const PersonEntity = sqliteTable(
       .notNull()
       .references(() => CustomerEntity.id),
     otherInformation: text('other_information', { length: 5000 }),
+    peopleLeadEid: text('people_lead_eid', { length: 255 }),
     createdAt: int('created_at', { mode: 'timestamp' })
       .notNull()
       .$defaultFn(() => new Date()),
@@ -66,6 +67,7 @@ export const ChapterEntity = sqliteTable('chapter', {
 export const SkillEntity = sqliteTable('skill', {
   id: int('id').primaryKey({ autoIncrement: true }),
   name: text('name', { length: 255 }).notNull(),
+  description: text('description', { length: 2048 }),
   createdAt: int('created_at', { mode: 'timestamp' })
     .notNull()
     .$defaultFn(() => new Date()),
@@ -74,6 +76,7 @@ export const SkillEntity = sqliteTable('skill', {
 export const SkillLevelEntity = sqliteTable('skill_level', {
   id: int('id').primaryKey({ autoIncrement: true }),
   name: text('name', { length: 255 }).notNull(),
+  description: text('description', { length: 2048 }),
   createdAt: int('created_at', { mode: 'timestamp' })
     .notNull()
     .$defaultFn(() => new Date()),

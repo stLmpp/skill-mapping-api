@@ -15,11 +15,16 @@ export class GetSkillsController {
   @ZRes([SkillDto])
   @Get()
   async getAll(): Promise<SkillDto[]> {
-    return this.drizzle
+    const entities = await this.drizzle
       .select({
         skillId: SkillEntity.id,
         skillName: SkillEntity.name,
+        skillDescription: SkillEntity.description,
       })
       .from(SkillEntity);
+    return entities.map((entity) => ({
+      ...entity,
+      skillDescription: entity.skillDescription ?? undefined,
+    }));
   }
 }

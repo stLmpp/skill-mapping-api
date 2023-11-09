@@ -70,6 +70,7 @@ export class GetAllPersonXlsxController {
       { key: 'lastCustomer', header: 'Ultimo cliente' },
       { key: 'skills', header: 'Skills' },
       { key: 'otherInformation', header: 'Outras informações' },
+      { key: 'peopleLead', header: 'People Lead' },
       { key: 'updatedAt', header: 'Última atualização' },
     ];
     for (const entity of entities) {
@@ -83,6 +84,7 @@ export class GetAllPersonXlsxController {
         chapter: entity.chapterName,
         lastCustomer: entity.lastCustomerName,
         updatedAt: format(entity.updatedAt, 'dd/MM/yyyy HH:mm:ss'),
+        peopleLead: entity.peopleLeadEid,
       });
       const updatedAtCell = row.getCell('updatedAt');
       if (!updatedAtCell) {

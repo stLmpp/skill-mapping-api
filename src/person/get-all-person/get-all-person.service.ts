@@ -60,6 +60,7 @@ export class GetAllPersonService {
         languageSkillLevelName: personLanguageSkillLevelAlias.name,
         languageCreatedAt: PersonLanguageEntity.createdAt,
         languageUpdatedAt: PersonLanguageEntity.updatedAt,
+        peopleLeadEid: PersonEntity.peopleLeadEid,
       })
       .from(PersonEntity)
       .leftJoin(
@@ -137,6 +138,7 @@ export class GetAllPersonService {
         lastCustomerId: entity.lastCustomerId,
         lastCustomerName: entity.lastCustomerName,
         updatedAt,
+        peopleLeadEid: entity.peopleLeadEid ?? undefined,
       });
       if (
         entity.personSkillId &&

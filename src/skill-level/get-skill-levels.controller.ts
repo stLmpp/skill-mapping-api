@@ -15,11 +15,16 @@ export class GetSkillLevelsController {
   @ZRes([SkillLevelDto])
   @Get()
   async get(): Promise<SkillLevelDto[]> {
-    return this.drizzle
+    const entities = await this.drizzle
       .select({
         skillLevelId: SkillLevelEntity.id,
         skillLevelName: SkillLevelEntity.name,
+        skillLevelDescription: SkillLevelEntity.description,
       })
       .from(SkillLevelEntity);
+    return entities.map((entity) => ({
+      ...entity,
+      skillLevelDescription: entity.skillLevelDescription ?? undefined,
+    }));
   }
 }

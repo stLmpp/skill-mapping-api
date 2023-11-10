@@ -7,7 +7,7 @@ import Database from 'better-sqlite3';
 import { BetterSQLite3Database, drizzle } from 'drizzle-orm/better-sqlite3';
 import { migrate } from 'drizzle-orm/better-sqlite3/migrator';
 
-import { DATA_MIGRATIONS } from './data-migration/index.js';
+import { runDataMigration } from './data-migration/run-data-migration.js';
 import { getClazz } from './util/get-clazz.js';
 
 export class Drizzle extends getClazz<BetterSQLite3Database>() {}
@@ -28,22 +28,7 @@ const drizzleDatabase = drizzle(database, {
   },
 });
 migrate(drizzleDatabase, { migrationsFolder: './drizzle' });
-const dataMigrationLogger = new Logger('Data migration');
-for (const migration of DATA_MIGRATIONS) {
-  migration
-    .run(drizzleDatabase)
-    .then(() => {
-      dataMigrationLogger.debug(`Migration ${migration.name} run successfully`);
-    })
-    .catch((error) => {
-      dataMigrationLogger.error(
-        `Error while running migration ${migration.name}: ${JSON.stringify({
-          error,
-          errorString: String(error),
-        })}`,
-      );
-    });
-}
+runDataMigration(drizzleDatabase);
 
 @Module({
   providers: [

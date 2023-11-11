@@ -6,9 +6,19 @@ import { SkillLevelEntity } from '../schema.js';
 import { DataMigration } from './data-migration.type.js';
 
 const data: InferInsertModel<typeof SkillLevelEntity>[] = [
-  { name: 'Básico' },
-  { name: 'Intermediário' },
-  { name: 'Avançado' },
+  {
+    name: 'Básico',
+    description: 'Nível básico de conhecimento, já usou na prática (TODO)',
+  },
+  {
+    name: 'Intermediário',
+    description: 'Já usou múltiplas vezes, consegue se virar sozinho (TODO)',
+  },
+  {
+    name: 'Avançado',
+    description:
+      'Tem vasto conhecimento, consegue atuar como professor na area (TODO)',
+  },
 ];
 
 export const skillLevelDataMigration: DataMigration = {

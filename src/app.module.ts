@@ -7,6 +7,7 @@ import { ChapterModule } from './chapter/chapter.module.js';
 import { CustomerModule } from './customer/customer.module.js';
 import { DrizzleOrmModule } from './drizzle-orm.module.js';
 import { JobRoleModule } from './job-role/job-role.module.js';
+import { LanguageModule } from './language/language.module.js';
 import { PersonModule } from './person/person.module.js';
 import { SkillModule } from './skill/skill.module.js';
 import { SkillLevelModule } from './skill-level/skill-level.module.js';
@@ -23,6 +24,7 @@ import { SkillLevelModule } from './skill-level/skill-level.module.js';
       { path: 'chapter', module: ChapterModule },
       { path: 'career-level', module: CareerLevelModule },
       { path: 'job-role', module: JobRoleModule },
+      { path: 'language', module: LanguageModule },
     ]),
     PersonModule,
     SkillLevelModule,
@@ -31,6 +33,7 @@ import { SkillLevelModule } from './skill-level/skill-level.module.js';
     ChapterModule,
     CareerLevelModule,
     JobRoleModule,
+    LanguageModule,
   ],
   controllers: [],
   providers: [],

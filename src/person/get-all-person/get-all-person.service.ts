@@ -147,7 +147,7 @@ export class GetAllPersonService {
         updatedAt,
         peopleLeadEid: entity.peopleLeadEid ?? undefined,
         lastJobRoleId: entity.lastJobRoleId,
-        lastJobRoleName: entity.lastCustomerName,
+        lastJobRoleName: entity.lastJobRoleName,
       });
       if (
         entity.personSkillId &&
